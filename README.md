@@ -10,7 +10,7 @@ This repository contains the project for a proof of concept about ESB Customizin
 
 ## Testing
 
-There is another project in this repository to test this componentes, for that, go to [here](https://github.com/serrodcal/ESBAnalyticsOpenTracing).
+There is another project in this repository to test this component on Docker Compose with an ESB, three microservices and a Zipkin, for that, go to [here](https://github.com/serrodcal/ESBAnalyticsOpenTracing).
 
 ## Configuring ESB to run custom observer
 
