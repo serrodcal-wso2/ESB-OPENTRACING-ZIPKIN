@@ -12,7 +12,7 @@ This repository contains the project for a proof of concept about ESB Customizin
 
 _Under construction_.
 
-# Regarding OpenTracing
+## Regarding OpenTracing
 
 Enter OpenTracing: by offering consistent, expressive, vendor-neutral APIs for popular platforms, OpenTracing makes it easy for developers to add (or switch) tracing implementations with an O(1) configuration change. OpenTracing also offers a lingua franca for OSS instrumentation and platform-specific tracing helper libraries.
 
