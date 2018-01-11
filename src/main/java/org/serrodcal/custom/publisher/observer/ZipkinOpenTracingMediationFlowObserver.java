@@ -2,6 +2,7 @@ package org.serrodcal.custom.publisher.observer;
 
 import brave.Tracing;
 import brave.opentracing.BraveTracer;
+import io.opentracing.Span;
 import io.opentracing.Tracer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -43,10 +44,15 @@ public class ZipkinOpenTracingMediationFlowObserver implements MessageFlowObserv
     @Override
     public void updateStatistics(PublishingFlow publishingFlow) {
         //TODO
+        Span span = tracer.buildSpan("example")
+                .withTag("component","wso2esb")
+                .withTag("span.kind","esb")
+                .start();
         String id = publishingFlow.getMessageFlowId();
         Map<String, Object> map = publishingFlow.getObjectAsMap();
         log.error(id);
         log.error(map.toString());
+        span.finish();
         /*for (PublishingEvent event : publishingFlow.getEvents()) {
             event.
         }*/
