@@ -54,7 +54,10 @@
                             org.apache.synapse.aspects.flow.statistics.publishing.*,
                             org.wso2.carbon.das.data.publisher.util.*,
                             com.fasterxml.jackson.databind.*
-                            <!-- TODO: Put here opentracing dependencies -->
+                            <!-- Zipkin -->
+                            brave.*
+                            io.opentracing.*
+                            zipkin2.reporter.*
                         </Import-Package>
                     </instructions>
                 </configuration>

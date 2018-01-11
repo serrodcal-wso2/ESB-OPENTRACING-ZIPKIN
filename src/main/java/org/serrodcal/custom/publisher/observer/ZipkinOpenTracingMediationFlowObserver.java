@@ -1,44 +1,54 @@
 package org.serrodcal.custom.publisher.observer;
 
+import brave.Tracing;
+import brave.opentracing.BraveTracer;
+import io.opentracing.Tracer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.synapse.aspects.flow.statistics.publishing.PublishingFlow;
-import org.serrodcal.custom.publisher.services.ZipkinOpenTracingPublisherThread;
-import org.wso2.carbon.base.ServerConfiguration;
 import org.wso2.carbon.das.messageflow.data.publisher.observer.MessageFlowObserver;
+import zipkin2.reporter.AsyncReporter;
+import zipkin2.reporter.Reporter;
+import zipkin2.reporter.Sender;
+import zipkin2.reporter.okhttp3.OkHttpSender;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class ZipkinOpenTracingMediationFlowObserver implements MessageFlowObserver {
 
     private static final Log log = LogFactory.getLog(ZipkinOpenTracingMediationFlowObserver.class);
 
-    private ZipkinOpenTracingPublisherThread publisherThread;
-
-    // ServerConfiguration
-    private ServerConfiguration serverConf = ServerConfiguration.getInstance();
-
-    // Keep all needed configurations (final configurations)
-    private Map<String, Object> configurations = new HashMap<>();
+    private final Sender sender;
+    private final Tracer tracer;
+    private final Tracing braveTracing;
 
     public ZipkinOpenTracingMediationFlowObserver() {
-
+        this.sender = OkHttpSender.create("http://zipkin:9411/api/v2/spans");
+        Reporter spanReporter = AsyncReporter.create(this.sender);
+        this.braveTracing = Tracing.newBuilder().localServiceName("wso2esb-5.0.0").spanReporter(spanReporter).build();
+        this.tracer = BraveTracer.create(this.braveTracing);
     }
 
     @Override
     public void destroy() {
-        publisherThread.shutdown();
-
-        //TODO: close all
-
-        if (log.isDebugEnabled()) {
-            log.debug("Shutting down the mediation statistics observer of Zipkin OpenTracing");
+        try {
+            this.sender.close();
+        }catch (Exception e){
+            // Do nothing
         }
+        this.braveTracing.close();
+        System.exit(0);
     }
 
     @Override
     public void updateStatistics(PublishingFlow publishingFlow) {
         //TODO
+        String id = publishingFlow.getMessageFlowId();
+        Map<String, Object> map = publishingFlow.getObjectAsMap();
+        log.error(id);
+        log.error(map.toString());
+        /*for (PublishingEvent event : publishingFlow.getEvents()) {
+            event.
+        }*/
     }
 }
