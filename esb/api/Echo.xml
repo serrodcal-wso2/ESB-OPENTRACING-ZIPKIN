@@ -1,0 +1,10 @@
+<api xmlns="http://ws.apache.org/ns/synapse" name="Echo" context="/echo">
+    <resource methods="POST" uri-template="/echo">
+        <inSequence>
+            <log>
+                <property name="*** INDISDE" value="Echo API"/>
+            </log>
+            <respond/>
+        </inSequence>
+    </resource>
+</api>

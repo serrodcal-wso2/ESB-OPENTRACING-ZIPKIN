@@ -8,6 +8,7 @@ RUN apt-get update && \
     unzip /opt/wso2esb-5.0.0.zip -d /opt && \
     rm /opt/wso2esb-5.0.0.zip
 
+ADD ./api/Echo.xml /opt/wso2esb-5.0.0/repository/deployment/server/synapse-configs/default/api/Echo.xml
 ADD ./api/Hello.xml /opt/wso2esb-5.0.0/repository/deployment/server/synapse-configs/default/api/Hello.xml
 ADD ./api/Formatter.xml /opt/wso2esb-5.0.0/repository/deployment/server/synapse-configs/default/api/Formatter.xml
 ADD ./api/Publisher.xml /opt/wso2esb-5.0.0/repository/deployment/server/synapse-configs/default/api/Publisher.xml
