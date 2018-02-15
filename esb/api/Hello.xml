@@ -1,0 +1,17 @@
+<api xmlns="http://ws.apache.org/ns/synapse" name="Hello" context="/hello">
+    <resource methods="GET">
+        <inSequence>
+            <log>
+                <property name="*** INDISDE" value="Echo API"/>
+            </log>
+            <send>
+                <endpoint>
+                    <http uri-template="http://hello:8080"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send />
+        </outSequence>
+    </resource>
+</api>

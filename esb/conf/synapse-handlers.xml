@@ -1,0 +1,3 @@
+<handlers>
+    <handler name="OpenTracingZipkinHandler" class="com.serrodcal.esb.opentracing.handler.OpenTracingZipkinHandler"/>
+</handlers>
