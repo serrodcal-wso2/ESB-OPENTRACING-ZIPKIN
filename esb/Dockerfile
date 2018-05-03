@@ -8,6 +8,7 @@ RUN apt-get update && \
     unzip /opt/wso2esb-5.0.0.zip -d /opt && \
     rm /opt/wso2esb-5.0.0.zip
 
+ADD ./tpa/application.conf /opt/wso2esb-5.0.0/repository/conf/tpa/application.conf
 ADD ./api/Echo.xml /opt/wso2esb-5.0.0/repository/deployment/server/synapse-configs/default/api/Echo.xml
 ADD ./api/Hello.xml /opt/wso2esb-5.0.0/repository/deployment/server/synapse-configs/default/api/Hello.xml
 ADD ./api/Formatter.xml /opt/wso2esb-5.0.0/repository/deployment/server/synapse-configs/default/api/Formatter.xml
@@ -19,4 +20,4 @@ ADD ./bin/wso2server.sh /opt/wso2esb-5.0.0/bin/wso2server.sh
 
 EXPOSE 9443 8243 8280 19444
 WORKDIR /opt/wso2esb-5.0.0
-CMD ["bin/wso2server.sh"]
+CMD ["bin/wso2server.sh", "-Dconfig.file=/opt/wso2esb-5.0.0/repository/conf/tpa/application.conf"]

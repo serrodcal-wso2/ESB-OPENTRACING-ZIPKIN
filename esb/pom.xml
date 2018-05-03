@@ -20,6 +20,7 @@
         <zipkin.brave.version>4.13.1</zipkin.brave.version>
         <zipkin.java.version>2.4.6</zipkin.java.version>
         <reporter.version>2.2.2</reporter.version>
+        <typesafe.config.version>1.3.3</typesafe.config.version>
     </properties>
 
     <repositories>
@@ -123,6 +124,12 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
+        </dependency>
+        <!-- Configuration -->
+        <dependency>
+            <groupId>com.typesafe</groupId>
+            <artifactId>config</artifactId>
+            <version>${typesafe.config.version}</version>
         </dependency>
         <!-- Apache Synapse -->
         <dependency>
