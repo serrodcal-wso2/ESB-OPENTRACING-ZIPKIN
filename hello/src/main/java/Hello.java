@@ -6,6 +6,7 @@ import io.dropwizard.Application;
 import io.dropwizard.Configuration;
 import io.dropwizard.setup.Environment;
 import io.opentracing.Span;
+import io.opentracing.SpanContext;
 import io.opentracing.Tracer;
 import io.opentracing.propagation.Format;
 import io.opentracing.propagation.TextMapExtractAdapter;
@@ -27,9 +28,11 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class Hello extends Application<Configuration> {
@@ -113,17 +116,19 @@ public class Hello extends Application<Configuration> {
       }
 
       private String formatString(Tracer tracer, Span spanRoot, String helloTo) {
-          String helloStr = getHttp(tracer, spanRoot, "esb",8081, "format", "helloTo", helloTo);
+          String helloStr = getHttp(tracer, spanRoot, "formatter", 8081, "format", "helloTo", helloTo);
           return helloStr;
       }
 
       private void printHello(Tracer tracer, Span spanRoot, String helloStr) {
-          getHttp(tracer, spanRoot, "publisher", 8082, "esb", "helloStr", helloStr);
+          getHttp(tracer, spanRoot, "publisher", 8082, "publish", "helloStr", helloStr);
       }
 
       @GET
       public String format(@QueryParam("helloTo") String helloTo, @QueryParam("greeting") String greeting, @Context HttpHeaders httpHeaders){
           Tracer tracer = BraveTracer.create(this.tracing);
+          SpanContext spanContext = tracer.extract(Format.Builtin.HTTP_HEADERS,
+                    new TextMapExtractAdapter(convertMultiToRegularMap(httpHeaders.getRequestHeaders())));
 
           StringBuilder sb = new StringBuilder();
           sb.append("/hello?helloTo=");
@@ -133,6 +138,7 @@ public class Hello extends Application<Configuration> {
           String helloToTag = sb.toString();
 
           Span span = tracer.buildSpan("hello orchestator")
+                  .asChildOf(spanContext)
                   .withTag("component","dropwizard")
                   .withTag("http.method", "GET")
                   .withTag("http.url",helloToTag)
@@ -150,6 +156,24 @@ public class Hello extends Application<Configuration> {
 
           return "hello published";
       }
+
+      private Map<String, String> convertMultiToRegularMap(MultivaluedMap<String, String> m) {
+            Map<String, String> map = new HashMap<>();
+            if (m == null) {
+                return map;
+            }
+            for (Map.Entry<String, List<String>> entry : m.entrySet()) {
+                StringBuilder sb = new StringBuilder();
+                for (String s : entry.getValue()) {
+                    if (sb.length() > 0) {
+                        sb.append(',');
+                    }
+                    sb.append(s);
+                }
+                map.put(entry.getKey(), sb.toString());
+            }
+            return map;
+        }
 
     }
 

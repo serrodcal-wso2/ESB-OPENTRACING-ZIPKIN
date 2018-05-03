@@ -1,22 +1,36 @@
 # WSO2 ESB Custom Publisher For Zipkin and OpenTracing
 
-This repository contains the project for a proof of concept about ESB Customizing Statics Publishing implementation following OpenTracing.
+This project consist of a custom synapse handler for intrumenting on WSO2 ESB and integrate it with Zipkin following OpenTracing.
 
-## Building
+## Getting Started
 
-* Clone this repository.
-* Run `mvn clean install` in cloned directory.
-* Copy `org.serrodcal.custom.publisher_1.0.jar` from target directory into dropins directory of ESB installation.
+### Prerequisites
 
-## Testing
+Clone this project in local: `~$ git clone https://github.com/serrodcal/ESB-OPENTRACING-ZIPKIN.git`.
 
-There is another project in this repository to test this component on Docker Compose with an ESB, three microservices and a Zipkin  , for that, go to [here](https://github.com/serrodcal/ESBAnalyticsOpenTracing).
+Please, compile and build all componentes (esb, formatter, publisher and hello subfolders) using `~$ mvn clean install`.
 
-## Configuring ESB to run custom observer
+## Running and testing
 
-_Under construction_.
+In root directory, run `~$ docker-compose up`.
 
-## Regarding OpenTracing
+Then, send requests like this: `~$ curl -i -X GET 'http://localhost:8280/hello?helloTo=Sergio&greeting=Hola'`. Response will contains `hello published` as body result.
+
+### Regarding this demo
+
+An overview is the following image:
+
+![](/img/flow.png)
+
+Access to zipkin page to check spans, for this go to `http://localhost:9411`:
+
+![](/img/image.png)
+
+Access to WSO2 ESB web console, go to `https://localhost:9443`. 
+
+For more info about componentes, please read `docker-compose.yml` file.
+
+### Regarding OpenTracing
 
 Enter OpenTracing: by offering consistent, expressive, vendor-neutral APIs for popular platforms, OpenTracing makes it easy for developers to add (or switch) tracing implementations with an O(1) configuration change. OpenTracing also offers a lingua franca for OSS instrumentation and platform-specific tracing helper libraries.
 

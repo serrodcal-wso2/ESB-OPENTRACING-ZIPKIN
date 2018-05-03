@@ -11,8 +11,6 @@ RUN apt-get update && \
 ADD ./tpa/application.conf /opt/wso2esb-5.0.0/repository/conf/tpa/application.conf
 ADD ./api/Echo.xml /opt/wso2esb-5.0.0/repository/deployment/server/synapse-configs/default/api/Echo.xml
 ADD ./api/Hello.xml /opt/wso2esb-5.0.0/repository/deployment/server/synapse-configs/default/api/Hello.xml
-ADD ./api/Formatter.xml /opt/wso2esb-5.0.0/repository/deployment/server/synapse-configs/default/api/Formatter.xml
-ADD ./api/Publisher.xml /opt/wso2esb-5.0.0/repository/deployment/server/synapse-configs/default/api/Publisher.xml
 ADD ./target/openTracingZipkinHandler-1.0.0.jar /opt/wso2esb-5.0.0/repository/components/dropins/openTracingZipkinHandler-1.0.0.jar
 ADD ./conf/log4j.properties /opt/wso2esb-5.0.0/repository/conf/log4j.properties
 ADD ./conf/synapse-handlers.xml /opt/wso2esb-5.0.0/repository/conf/synapse-handlers.xml

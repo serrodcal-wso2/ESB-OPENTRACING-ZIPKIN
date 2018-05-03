@@ -1,17 +1,17 @@
 <api xmlns="http://ws.apache.org/ns/synapse" name="Hello" context="/hello">
-    <resource methods="GET">
+    <resource methods="GET" uri-template="?helloTo={v1}&amp;greeting={v2}">
         <inSequence>
             <log>
-                <property name="*** INDISDE" value="Echo API"/>
+                <property name="*** INDISDE" value="Hello API"/>
             </log>
             <send>
                 <endpoint>
-                    <http uri-template="http://hello:8080"/>
+                    <http method="GET" uri-template="http://hello:8080/hello?helloTo={query.param.v1}&amp;greeting={query.param.v2}"/>
                 </endpoint>
             </send>
         </inSequence>
         <outSequence>
-            <send />
+            <send/>
         </outSequence>
     </resource>
 </api>
