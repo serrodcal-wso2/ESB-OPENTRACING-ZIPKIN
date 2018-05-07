@@ -116,12 +116,12 @@ public class Hello extends Application<Configuration> {
       }
 
       private String formatString(Tracer tracer, Span spanRoot, String helloTo) {
-          String helloStr = getHttp(tracer, spanRoot, "formatter", 8081, "format", "helloTo", helloTo);
+          String helloStr = getHttp(tracer, spanRoot, "esb", 8280, "format", "helloTo", helloTo);
           return helloStr;
       }
 
       private void printHello(Tracer tracer, Span spanRoot, String helloStr) {
-          getHttp(tracer, spanRoot, "publisher", 8082, "publish", "helloStr", helloStr);
+          getHttp(tracer, spanRoot, "esb", 8280, "publish", "helloStr", helloStr);
       }
 
       @GET

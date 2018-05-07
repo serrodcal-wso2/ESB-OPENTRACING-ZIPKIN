@@ -1,0 +1,17 @@
+<api xmlns="http://ws.apache.org/ns/synapse" name="Publisher" context="/publish">
+    <resource methods="GET" uri-template="?helloStr={v1}">
+        <inSequence>
+            <log>
+                <property name="*** INDISDE" value="Publisher API"/>
+            </log>
+            <send>
+                <endpoint>
+                    <http method="GET" uri-template="http://publisher:8082/publish?helloStr={query.param.helloStr}"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </resource>
+</api>

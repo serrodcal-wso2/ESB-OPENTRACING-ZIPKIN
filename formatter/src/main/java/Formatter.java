@@ -45,7 +45,7 @@ public class Formatter extends Application<Configuration> {
                     new TextMapExtractAdapter(convertMultiToRegularMap(httpHeaders.getRequestHeaders())));
 
             StringBuilder sb = new StringBuilder();
-            sb.append("/hello?helloTo=");
+            sb.append("/format?helloTo=");
             sb.append(helloTo);
             String helloToTag = sb.toString();
 
@@ -63,7 +63,7 @@ public class Formatter extends Application<Configuration> {
                 greeting = "Hello";
             }
 
-            String helloStr = String.format("%s, %s!", greeting, helloTo);
+            String helloStr = String.format("%s %s", greeting, helloTo);
             span.log(ImmutableMap.of("event", "string-format", "value", helloStr));
 
             span.finish();

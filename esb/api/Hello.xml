@@ -6,7 +6,7 @@
             </log>
             <send>
                 <endpoint>
-                    <http method="GET" uri-template="http://hello:8080/hello?helloTo={query.param.v1}&amp;greeting={query.param.v2}"/>
+                    <http method="GET" uri-template="http://hello:8080/hello?helloTo={query.param.helloTo}&amp;greeting={query.param.greeting}"/>
                 </endpoint>
             </send>
         </inSequence>

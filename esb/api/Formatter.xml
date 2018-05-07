@@ -1,0 +1,18 @@
+<api xmlns="http://ws.apache.org/ns/synapse" name="Formatter" context="/format">
+    <resource methods="GET" uri-template="?helloTo={v1}">
+        <inSequence>
+            <log>
+                <property name="*** INDISDE" value="Formatter API"/>
+            </log>
+            <send>
+                <endpoint>
+                    <http method="GET" uri-template="http://formatter:8081/format?helloTo={query.param.helloTo}"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+    </resource>
+</api>
+
