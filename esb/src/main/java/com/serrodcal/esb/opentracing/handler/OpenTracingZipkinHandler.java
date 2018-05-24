@@ -102,6 +102,11 @@ public class OpenTracingZipkinHandler extends AbstractSynapseHandler {
 
             Span span = (Span) messageContext.getProperty(SPANKEY);
 
+            String statusCode = (String) axis2MessageContext.getProperty("HTTP_SC");
+            if (!statusCode.startsWith("2")) {
+                span.setTag("error", true);
+            }
+
             span.log("handleResponseOutFlow");
 
             span.finish();
